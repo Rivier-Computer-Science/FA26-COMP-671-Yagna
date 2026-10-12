@@ -44,11 +44,20 @@ report/      # final PDF report
 ```
 
 ## Results
+Single run, seed 42, held-out test set (4,050 images).
+
 | Model | Test accuracy | Test macro-F1 |
 |---|---|---|
-| Baseline (LogReg) | _fill in_ | _fill in_ |
-| CNN_plain | _fill in_ | _fill in_ |
-| CNN_aug | _fill in_ | _fill in_ |
+| Baseline (LogReg on pixels) | 44.7 % | 0.439 |
+| CNN_plain (no augmentation) | 97.5 % | 0.974 |
+| CNN_aug (flips + 90° rotations) | **97.9 %** | **0.978** |
+
+**Key findings**
+- The CNN beats the pixel baseline by **53 points**, so spatial feature learning is essential.
+- Augmentation adds only +0.44 F1 points, but it raises final training loss from 0.025 to 0.061 at the same validation score, so it reduces overfitting.
+- Errors concentrate in the agricultural classes (AnnualCrop ↔ PermanentCrop ↔ Pasture), which look alike in single-date RGB imagery.
+
+Figures are in `results/`: `learning_curves.png`, `confusion_matrices.png`, `misclassified.png`, `confidence.png`, `inference_demo.png`.
 
 ## Reproducing without retraining
 Weights are in `models/`. Run the notebook up through Section 4, then run Section 12 (inference). It loads `models/CNN_aug.pth` directly.
