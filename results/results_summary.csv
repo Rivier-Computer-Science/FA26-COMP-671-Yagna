@@ -1,0 +1,4 @@
+,Test accuracy,Test macro-F1
+Baseline (LogReg),0.4467,0.4387
+CNN_plain,0.9746,0.9738
+CNN_aug,0.9788,0.9782
