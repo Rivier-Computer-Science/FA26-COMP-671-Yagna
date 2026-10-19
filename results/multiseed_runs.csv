@@ -1,0 +1,7 @@
+model,seed,acc,f1
+CNN_plain,42,0.9726,0.9718
+CNN_aug,42,0.9798,0.9792
+CNN_plain,1,0.9758,0.9751
+CNN_aug,1,0.9790,0.9786
+CNN_plain,2,0.9723,0.9714
+CNN_aug,2,0.9773,0.9764

@@ -1,0 +1,13 @@
+{
+  "seed": 42,
+  "split": "70/15/15 stratified",
+  "batch_size": 128,
+  "epochs": 25,
+  "lr": 0.001,
+  "weight_decay": 0.0001,
+  "optimizer": "Adam",
+  "scheduler": "CosineAnnealing",
+  "dropout": 0.3,
+  "baseline": "LogReg on 16x16 RGB pixels",
+  "augmentation": "hflip+vflip+rot90"
+}
