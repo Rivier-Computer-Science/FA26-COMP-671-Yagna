@@ -1,0 +1,64 @@
+# Configuration for "Land Use Classification from Satellite Images Using Deep Learning"
+# These are the exact settings used in land_use_classification_eurosat.ipynb
+# (CONFIG cell in Section 1). The notebook also writes them to results/config.json.
+
+project:
+  name: land-use-classification-eurosat
+  notebook: land_use_classification_eurosat.ipynb
+
+data:
+  dataset: EuroSAT (RGB)            # Helber et al. (2019), 27,000 images, 10 classes
+  source: torchvision.datasets.EuroSAT   # downloaded automatically
+  root: data/
+  image_size: 64                    # 64 x 64 pixels, 3 channels
+  num_classes: 10
+  split:
+    train: 0.70
+    val: 0.15
+    test: 0.15
+    stratified: true
+    seed: 42
+    saved_to: results/splits.json
+  normalization: per-channel mean/std computed on the training split only
+
+baseline:
+  model: LogisticRegression (scikit-learn)
+  input: images downsampled to 16 x 16 x 3 = 768 standardized features
+  max_iter: 2000
+  C: 1.0
+
+model:
+  name: LandCNN
+  blocks: [32, 64, 128, 256]        # each: (Conv3x3 -> BatchNorm -> ReLU) x2 -> MaxPool
+  pooling: global_average
+  dropout: 0.3
+  parameters: 1176746
+
+training:
+  seed: 42
+  batch_size: 128
+  epochs: 25
+  optimizer: Adam
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  scheduler: CosineAnnealingLR
+  loss: cross_entropy
+  model_selection: best validation macro-F1
+  num_workers: 0
+  device: auto                      # cuda if available, else cpu
+
+augmentation:                       # controlled comparison: CNN_plain vs CNN_aug
+  CNN_plain: none
+  CNN_aug: [random_horizontal_flip, random_vertical_flip, random_rot90]
+  applied_to: training set only
+
+robustness:
+  seeds: [42, 1, 2]                 # Section 14: augmentation comparison over 3 seeds
+
+evaluation:
+  metrics: [accuracy, macro_f1, confusion_matrix, per_class_f1]
+  primary_metric: macro_f1
+
+outputs:
+  models_dir: models/
+  results_dir: results/

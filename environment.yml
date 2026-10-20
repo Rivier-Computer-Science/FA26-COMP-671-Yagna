@@ -1,0 +1,21 @@
+# Conda environment for the EuroSAT land-use classification project.
+# Create:   conda env create -f environment.yml
+# Activate: conda activate eurosat-landuse
+# Versions match the environment used for this project (pip install -r requirements.txt).
+name: eurosat-landuse
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - pip
+  - pip:
+      - torch==2.14.1
+      - torchvision==0.29.1
+      - numpy==2.4.6
+      - pandas==3.0.6
+      - matplotlib==3.11.2
+      - seaborn==0.13.2
+      - scikit-learn==1.9.1
+      - tqdm==4.70.1
+      - ipykernel==7.4.0
+      - pyyaml

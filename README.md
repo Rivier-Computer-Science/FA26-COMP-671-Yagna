@@ -24,7 +24,7 @@ Governments and environmental groups need to know how land is used (forest loss,
 | CNN_aug | Same CNN + random flips and 90° rotations (**controlled comparison**: only the training transform changes) |
 
 ## Key hyperparameters
-seed 42 · batch 128 · 25 epochs · Adam lr 1e-3, weight decay 1e-4 · cosine LR schedule · cross-entropy loss · best checkpoint chosen by validation macro-F1. The notebook also writes these to `results/config.json`.
+seed 42 · batch 128 · 25 epochs · Adam lr 1e-3, weight decay 1e-4 · cosine LR schedule · cross-entropy loss · best checkpoint chosen by validation macro-F1. All settings (data split, model, training, augmentation, seeds) are documented in `config.yaml`; the notebook also writes them to `results/config.json`.
 
 ## Setup & run
 ```bash
@@ -32,6 +32,8 @@ python -m venv .venv
 # Windows: .venv\Scripts\activate    macOS/Linux: source .venv/bin/activate
 pip install -r requirements.txt
 ```
+Or, with conda: `conda env create -f environment.yml` then `conda activate eurosat-landuse`.
+
 Open `land_use_classification_eurosat.ipynb` in VS Code or Jupyter, select the `.venv` kernel, and click **Run All**.
 
 Training was run on a **Google Colab T4 GPU**: about 15 minutes for Sections 1–13, plus about 30 minutes for the 3-seed check in Section 14. The notebook also runs on CPU (it picks the device automatically), but expect several hours; set `epochs=5` in `CONFIG` for a quick check.
@@ -39,7 +41,9 @@ Training was run on a **Google Colab T4 GPU**: about 15 minutes for Sections 1�
 ## Project structure
 ```
 land_use_classification_eurosat.ipynb   # full pipeline: data → baseline → CNN → ablation → evaluation → inference → 3-seed check
-requirements.txt
+requirements.txt                        # pip dependencies
+environment.yml                         # conda environment (pinned versions)
+config.yaml                             # all experiment settings
 results/     # figures, results_summary.csv, multiseed_runs.csv, multiseed_summary.csv
 report/      # final PDF report
 ```
